@@ -17,3 +17,7 @@ IITP Winter 2022 in Purdue University
     - test: implement test code
     - docs: documents
     - chore: setting files
+
+## Meeting
+
+[WIKI](https://github.com/Bikini-city/UAV-ground-detection-and-tracking-systems/wiki)
