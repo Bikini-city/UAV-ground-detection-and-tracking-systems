@@ -1,3 +1,15 @@
 fallen_tree/media
 fallen_tree/.env
 myvenv
+fallen_tree/YOLOX_outputs
+fallen_tree/.vscode
+fallen_tree/fallen_tree/.env
+visualization/migration
+media
+YOLOX_outputs
+*.log
+*.pot
+*.pyc
+__pycache__/
+fallen_tree/visualization/__pycache__/
+fallen_tree/visualization/YOLOX/tools/__pycache__/

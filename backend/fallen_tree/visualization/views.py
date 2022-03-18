@@ -5,7 +5,6 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .serializers import DataSetSerializer
-from .forms import FileUploadForm
 from .models import DataSet, FileUpload
 from .response_schema import *
 
@@ -18,7 +17,12 @@ from rest_framework.decorators import parser_classes
 from rest_framework.views import APIView
 from django.utils.datastructures import MultiValueDictKeyError
 from django.views.decorators.csrf import csrf_exempt
-test = True
+
+from visualization.detect_fallen import detect
+
+import os
+from fallen_tree.settings import BASE_DIR
+test = False
 
 #form-data for posting dataset's image or video
 src = openapi.Parameter('src', openapi.IN_FORM, type=openapi.TYPE_FILE, required=True)
@@ -82,11 +86,23 @@ def postDataSet(request):
                 )
                 result.save()
             #### For Test END ####
-
+            else:
+                print("src",src)
+                
+                down, broken = detect(dataSet.src)
+                result = Result (
+                    broken = broken,
+                    down = down,
+                    dataSet_id = dataSet
+                )
+                result.save()
+                
             result_json = ResultSerializer(result).data
             dataSet_data["broken"] = result_json["broken"]
             dataSet_data["down"] = result_json["down"]
 
+            print("src",dataSet.src)
+            os.remove(os.path.join(BASE_DIR, str(dataSet.src)))
             return JsonResponse(dataSet_data, safe=False, status=status.HTTP_201_CREATED)
         else:
             error_data["error"] = "POST /datas에서 오류가 발생함"
