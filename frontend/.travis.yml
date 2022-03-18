@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - node
+
+before_install:
+  - echo "start testing"
+
+script:
+  - npm run test
+
+after_success:
+  - echo "test Success"
