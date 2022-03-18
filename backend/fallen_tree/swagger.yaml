@@ -1,0 +1,164 @@
+swagger: '2.0'
+info:
+  title: FallenTree_Visualization_API
+  description: "FallenTree_Visualization API \uBB38\uC11C"
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: mjh991016@naver.com
+  license:
+    name: ''
+  version: v1
+basePath: /
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /datas/:
+    get:
+      operationId: datas_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DataSet'
+          examples:
+            application/json:
+              - id: 1
+                lat: '40.4240988275343500'
+                lng: '-86.9177794290636400'
+                src: /media/%EC%98%81%EC%83%81.mp4
+                date: '2022-02-08'
+                broken: 2
+                down: 3
+              - id: 2
+                lat: '40.4240988275343500'
+                lng: '-86.9177794290636400'
+                src: /media/False
+                date: '2022-02-08'
+                broken: 1
+                down: 2
+              - id: 3
+                lat: '40.4240988275343500'
+                lng: '-86.9177794290636400'
+                src: /media/False
+                date: '2022-02-08'
+                broken: 3
+                down: 4
+      tags:
+        - datas
+    parameters: []
+  /datas/uploads:
+    post:
+      operationId: datas_uploads_create
+      description: ''
+      parameters:
+        - name: src
+          in: formData
+          required: true
+          type: file
+        - name: lat
+          in: formData
+          required: true
+          type: number
+          format: decimal
+        - name: lng
+          in: formData
+          required: true
+          type: number
+          format: decimal
+        - name: date
+          in: formData
+          required: true
+          type: string
+          format: date
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DataSet'
+          examples:
+            application/json:
+              id: 13
+              lat: '40.4240988275343500'
+              lng: '-86.9177794290636400'
+              src: /media/%EC%84%9C%EB%AA%85_gtv1QSR.jpg
+              date: '2022-02-09'
+              broken: 4
+              down: 3
+      consumes:
+        - multipart/form-data
+      tags:
+        - datas
+    parameters: []
+  /datas/{id}:
+    get:
+      operationId: datas_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DataSet'
+          examples:
+            application/json:
+              id: 13
+              lat: '40.4240988275343500'
+              lng: '-86.9177794290636400'
+              src: /media/%EC%84%9C%EB%AA%85_gtv1QSR.jpg
+              date: '2022-02-09'
+              broken: 4
+              down: 3
+      tags:
+        - datas
+    delete:
+      operationId: datas_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: Success(HTTP_204_NO_CONTENT)
+      tags:
+        - datas
+    parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+definitions:
+  DataSet:
+    type: object
+    properties:
+      id:
+        title: Id
+        description: primary key
+        type: integer
+        readOnly: true
+      lat:
+        title: Lat
+        type: string
+        format: decimal
+        x-nullable: true
+      lng:
+        title: Lng
+        type: string
+        format: decimal
+        x-nullable: true
+      src:
+        title: Src
+        type: string
+        readOnly: true
+        x-nullable: true
+        format: uri
+      date:
+        title: Date
+        type: string
+        format: date
